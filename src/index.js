@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import SearchSelect from './components/SearchSelect'
 
 let example = (
     <div className='example'>
-        SearchSelect
+        <SearchSelect />
     </div>
 );
 
