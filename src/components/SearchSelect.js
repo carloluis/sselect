@@ -45,17 +45,18 @@ class SearchSelect extends React.Component{
     }
     renderItems({show, value}){
         let styles = {
-            display: 'block',
+            display: show? 'block':'none',
             width: 'inherit',
             maxHeight: '200px',
-            overflow: 'auto'
+            overflow: 'auto',
+            paddingLeft: 10
         };
 
-        return show? (
+        return (
             <ul className="dropdown-menu" style={styles} onClick={this.onItemClick}>
                 {items.filter(i=>i.includes(value)).map((item, index)=><li key={item}>{item}</li>)}
             </ul>
-        ): null;
+        );
     }
     render(){
         return (
