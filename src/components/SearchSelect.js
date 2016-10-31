@@ -11,7 +11,8 @@ class SearchSelect extends React.Component{
         this.onItemClick = this.onItemClick.bind(this);
         this.state = {
             value: '',
-            show: false
+            show: false,
+            search: ''
         };
     }
     componentDidMount(){
@@ -28,7 +29,7 @@ class SearchSelect extends React.Component{
     }
     onInputChange(e){
         // value to search for..
-        this.setState({ value: e.target.value });
+        this.setState({ search: e.target.value });
     }
     onInputClick(e){
         // show options..
@@ -43,7 +44,7 @@ class SearchSelect extends React.Component{
             show:false
         });
     }
-    renderItems({show, value}){
+    renderItems({show, value, search}){
         let styles = {
             display: show? 'block':'none',
             width: 'inherit',
@@ -54,16 +55,18 @@ class SearchSelect extends React.Component{
 
         return (
             <ul className="dropdown-menu" style={styles} onClick={this.onItemClick}>
-                {items.filter(i=>i.includes(value)).map((item, index)=><li key={item}>{item}</li>)}
+                {items.filter(i=>i.includes(search)).map((item, index)=><li key={item}>{item}</li>)}
             </ul>
         );
     }
     render(){
+        let { search, value, show } = this.state;
+        let text = (show && search) || value;
         return (
             <div className='input-group' style={{width:400}} tabIndex="0" 
                 onClick={this.onInputClick} onFocus={this.onInputClick} >
                 <input type="text" className="form-control" placeholder="search..."                    
-                    onChange={this.onInputChange} value={this.state.value} />
+                    onChange={this.onInputChange} value={text} />
                 <div className="input-group-addon">
                     <span className="caret"/>
                 </div>
