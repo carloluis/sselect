@@ -37,6 +37,7 @@ class SearchSelect extends React.Component{
     }
     onItemClick(e){
         e.nativeEvent.stopImmediatePropagation();
+        e.stopPropagation();
         this.setState({
             value: e.target.innerText,
             show:false
@@ -58,11 +59,11 @@ class SearchSelect extends React.Component{
     }
     render(){
         return (
-            <div className='input-group' style={{width:400}} tabIndex="0" >
+            <div className='input-group' style={{width:400}} tabIndex="0" 
+                onClick={this.onInputClick} onFocus={this.onInputClick} >
                 <input type="text" className="form-control" placeholder="search..."                    
-                    onChange={this.onInputChange} value={this.state.value} 
-                    onClick={this.onInputClick} onFocus={this.onInputClick} />
-                <div className="input-group-addon" onClick={this.onInputClick}>
+                    onChange={this.onInputChange} value={this.state.value} />
+                <div className="input-group-addon">
                     <span className="caret"/>
                 </div>
                 {this.renderItems(this.state)}
