@@ -9,10 +9,12 @@ class SearchSelect extends React.Component{
         this.onInputChange = this.onInputChange.bind(this);
         this.onInputClick = this.onInputClick.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
         this.state = {
             value: '',
             show: false,
-            search: ''
+            search: '',
+            overitem:0
         };
     }
     componentDidMount(){
@@ -31,6 +33,28 @@ class SearchSelect extends React.Component{
         // value to search for..
         this.setState({ search: e.target.value });
     }
+    onKeyDown(e){
+        console.log(e.keyCode, e);
+        let overitem = this.state.overitem;
+        switch(e.keyCode){
+            case 13: //enter
+                console.log('enter', e);
+                this.setState({value: items[overitem]});
+            case 27: //escape
+                this.setState({show: false});
+            break;
+            case 40: //down
+                console.log('down');
+                let next = (overitem + 1) % items.length;
+                this.setState({overitem: next, show:true});
+            break;
+            case 38: //up
+                console.log('up');
+                let prev = overitem>0? overitem-1: items.length-1;
+                this.setState({overitem: prev, show:true});
+            break;
+        }
+    }
     onInputClick(e){
         // show options..
         e.nativeEvent.stopImmediatePropagation();
@@ -44,28 +68,28 @@ class SearchSelect extends React.Component{
             show:false
         });
     }
-    renderItems({show, value, search}){
+    renderItems({show, value, search, overitem}){
         let styles = {
             display: show? 'block':'none',
             width: 'inherit',
             maxHeight: '200px',
-            overflow: 'auto',
-            paddingLeft: 10
+            overflow: 'auto'
         };
 
         return (
             <ul className="dropdown-menu" style={styles} onClick={this.onItemClick}>
-                {items.filter(i=>i.includes(search)).map((item, index)=><li key={item}>{item}</li>)}
+                {items.filter(item => item.includes(search))
+                    .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}>{item}</li>)}
             </ul>
         );
     }
     render(){
         let { search, value, show } = this.state;
-        let text = (show && search) || value;
+        let text = show? search: value;
         return (
             <div className='input-group' style={{width:400}} tabIndex="0" 
-                onClick={this.onInputClick} onFocus={this.onInputClick} >
-                <input type="text" className="form-control" placeholder="search..."                    
+                onClick={this.onInputClick} onFocus={this.onInputClick} onKeyDown={this.onKeyDown} >
+                <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
                 <div className="input-group-addon">
                     <span className="caret"/>
