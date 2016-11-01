@@ -79,7 +79,8 @@ class SearchSelect extends React.Component{
         return (
             <ul className="dropdown-menu" style={styles} onClick={this.onItemClick}>
                 {items.filter(item => item.includes(search))
-                    .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}>{item}</li>)}
+                    .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}
+                    onMouseEnter={()=>this.setState({overitem:index})}>{item}</li>)}
             </ul>
         );
     }
@@ -99,5 +100,7 @@ class SearchSelect extends React.Component{
         )
     }
 }
+
+//SearchSelect.displayName='SSelect';
 
 export default SearchSelect;
