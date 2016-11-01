@@ -92,14 +92,12 @@ class SearchSelect extends React.Component{
                 onClick={this.onInputClick} onFocus={this.onInputClick} onKeyDown={this.onKeyDown} >
                 <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
-                <div className="input-group-addon">
-                    <span className="caret"/>
-                </div>
+                <span className="clearer glyphicon glyphicon-triangle-bottom form-control-feedback" />
                 {!show && value && <span className="glyphicon glyphicon-remove" 
                     style={{position: 'absolute', right: 40, top: 0, bottom: 0,
                         height: 14, margin: 'auto', fontSize: 16, cursor: 'pointer',
                         color: '#ccc', zIndex:2}}
-                    onClick={()=>this.setState({value: ''})}/> }
+                    onClick={()=>this.setState({value: ''})}/> }       
                 {this.renderItems(this.state)}
             </div>
         )
