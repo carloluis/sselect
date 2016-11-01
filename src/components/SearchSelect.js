@@ -34,7 +34,7 @@ class SearchSelect extends React.Component{
         this.setState({ search: e.target.value });
     }
     onKeyDown(e){
-        console.log(e.keyCode, e);
+        //console.log(e.keyCode, e);
         let overitem = this.state.overitem;
         switch(e.keyCode){
             case 13: //enter
@@ -95,6 +95,11 @@ class SearchSelect extends React.Component{
                 <div className="input-group-addon">
                     <span className="caret"/>
                 </div>
+                {!show && value && <span className="glyphicon glyphicon-remove" 
+                    style={{position: 'absolute', right: 40, top: 0, bottom: 0,
+                        height: 14, margin: 'auto', fontSize: 16, cursor: 'pointer',
+                        color: '#ccc', zIndex:2}}
+                    onClick={()=>this.setState({value: ''})}/> }
                 {this.renderItems(this.state)}
             </div>
         )
