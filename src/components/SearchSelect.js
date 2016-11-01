@@ -10,6 +10,7 @@ class SearchSelect extends React.Component{
         this.onInputClick = this.onInputClick.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+        this.onRemoveValue = this.onRemoveValue.bind(this);
         this.state = {
             value: '',
             show: false,
@@ -31,7 +32,7 @@ class SearchSelect extends React.Component{
     }
     onInputChange(e){
         // value to search for..
-        this.setState({ search: e.target.value });
+        this.setState({ search: e.target.value, overitem:0 });
     }
     onKeyDown(e){
         //console.log(e.keyCode, e);
@@ -68,6 +69,9 @@ class SearchSelect extends React.Component{
             show:false
         });
     }
+    onRemoveValue(e){
+        this.setState({value: ''});
+    }
     renderItems({show, value, search, overitem}){
         let styles = {
             display: show? 'block':'none',
@@ -76,11 +80,13 @@ class SearchSelect extends React.Component{
             overflow: 'auto'
         };
 
+        let litems = items.filter(item => item.includes(search))
+            .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}
+            onMouseEnter={()=>this.setState({overitem:index})}>{item}</li>);
+
         return (
             <ul className="dropdown-menu" style={styles} onClick={this.onItemClick}>
-                {items.filter(item => item.includes(search))
-                    .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}
-                    onMouseEnter={()=>this.setState({overitem:index})}>{item}</li>)}
+                {litems.length? litems: <li style={{paddingLeft: 10}} onClick={(e)=>e.stopPropagation()}>no results found...</li>}
             </ul>
         );
     }
@@ -97,7 +103,7 @@ class SearchSelect extends React.Component{
                     style={{position: 'absolute', right: 40, top: 0, bottom: 0,
                         height: 14, margin: 'auto', fontSize: 16, cursor: 'pointer',
                         color: '#ccc', zIndex:2}}
-                    onClick={()=>this.setState({value: ''})}/> }       
+                    onClick={this.onRemoveValue} /> }       
                 {this.renderItems(this.state)}
             </div>
         )
