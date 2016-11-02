@@ -36,13 +36,17 @@ class SearchSelect extends BaseComponent{
         switch(e.keyCode){
             case 13: //enter
                 if(show){
-                    this.setState({value: items[overitem]});
+                    this.setState({value: items[overitem], show: false});
                 }else{
                     this.setState({show: true});
-                    break;
                 }
+                break;
             case 27: //escape
-                this.setState({show: false});
+                if(show){
+                    this.setState({show: false});
+                }else{
+                    this.setState({value: ''});
+                }
             break;
             case 40: //down
                 let next = show? (overitem + 1) % items.length: overitem;
