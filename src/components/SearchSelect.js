@@ -1,14 +1,10 @@
 import React from 'react'
+import BaseComponent from './BaseComponent'
 
-class SearchSelect extends React.Component{
+class SearchSelect extends BaseComponent{
     constructor(props){
         super(props);
-        this.documentClickHandler = this.documentClickHandler.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onInputClick = this.onInputClick.bind(this);
-        this.onItemClick = this.onItemClick.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-        this.onRemoveValue = this.onRemoveValue.bind(this);
+        this._bind('documentClickHandler', 'onInputChange', 'onInputClick', 'onItemClick', 'onKeyDown', 'onRemoveValue');
         this.state = {
             value: '',
             show: false,
