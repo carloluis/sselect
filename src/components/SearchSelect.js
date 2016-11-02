@@ -30,28 +30,30 @@ class SearchSelect extends React.Component{
     }
     onInputChange(e){
         // value to search for..
-        this.setState({ search: e.target.value, overitem:0 });
+        this.setState({ search: e.target.value, overitem:0, show:true });
     }
     onKeyDown(e){
         //console.log(e.keyCode, e);
-        let overitem = this.state.overitem;
+        let {show, overitem} = this.state;
         let items = this.props.items;
 
         switch(e.keyCode){
             case 13: //enter
-                console.log('enter', e);
-                this.setState({value: items[overitem]});
+                if(show){
+                    this.setState({value: items[overitem]});
+                }else{
+                    this.setState({show: true});
+                    break;
+                }
             case 27: //escape
                 this.setState({show: false});
             break;
             case 40: //down
-                console.log('down');
-                let next = (overitem + 1) % items.length;
+                let next = show? (overitem + 1) % items.length: overitem;
                 this.setState({overitem: next, show:true});
             break;
             case 38: //up
-                console.log('up');
-                let prev = overitem>0? overitem-1: items.length-1;
+                let prev = show? (overitem>0? overitem-1: items.length-1): overitem;
                 this.setState({overitem: prev, show:true});
             break;
         }
@@ -95,7 +97,7 @@ class SearchSelect extends React.Component{
         let text = show? search: value;
         return (
             <div className='input-group' style={{width:400}} tabIndex="0" 
-                onClick={this.onInputClick} onFocus={this.onInputClick} onKeyDown={this.onKeyDown} >
+                onClick={this.onInputClick} onKeyDown={this.onKeyDown} >
                 <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
                 <span className="clearer glyphicon glyphicon-triangle-bottom form-control-feedback" />
