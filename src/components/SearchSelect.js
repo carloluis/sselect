@@ -1,7 +1,5 @@
 import React from 'react'
 
-var items = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']; //todo: to props
-
 class SearchSelect extends React.Component{
     constructor(props){
         super(props);
@@ -37,6 +35,8 @@ class SearchSelect extends React.Component{
     onKeyDown(e){
         //console.log(e.keyCode, e);
         let overitem = this.state.overitem;
+        let items = this.props.items;
+
         switch(e.keyCode){
             case 13: //enter
                 console.log('enter', e);
@@ -80,7 +80,7 @@ class SearchSelect extends React.Component{
             overflow: 'auto'
         };
 
-        let litems = items.filter(item => item.includes(search))
+        let litems = this.props.items.filter(item => item.includes(search))
             .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}
             onMouseEnter={()=>this.setState({overitem:index})}>{item}</li>);
 
