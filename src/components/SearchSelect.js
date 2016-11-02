@@ -34,8 +34,8 @@ class SearchSelect extends React.Component{
     }
     onKeyDown(e){
         //console.log(e.keyCode, e);
-        let {show, overitem} = this.state;
-        let items = this.props.items;
+        let {show, overitem, search} = this.state;
+        let items = this.filterItems(this.props.items, search);
 
         switch(e.keyCode){
             case 13: //enter
@@ -74,6 +74,9 @@ class SearchSelect extends React.Component{
     onRemoveValue(e){
         this.setState({value: ''});
     }
+    filterItems(items, pattern){
+        return items.filter(item => item.includes(pattern));
+    }
     renderItems({show, value, search, overitem}){
         let styles = {
             display: show? 'block':'none',
@@ -82,7 +85,7 @@ class SearchSelect extends React.Component{
             overflow: 'auto'
         };
 
-        let litems = this.props.items.filter(item => item.includes(search))
+        let litems = this.filterItems(this.props.items, search)
             .map((item, index)=><li key={item} style={{backgroundColor: index==overitem?'lightgray':'', paddingLeft: 10}}
             onMouseEnter={()=>this.setState({overitem:index})}>{item}</li>);
 
