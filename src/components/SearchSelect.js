@@ -81,7 +81,7 @@ class SearchSelect extends BaseComponent{
         let styles = {
             display: show? 'block':'none',
             width: 'inherit',
-            maxHeight: '200px',
+            maxHeight: '190px',
             overflow: 'auto'
         };
 
@@ -105,8 +105,7 @@ class SearchSelect extends BaseComponent{
         };
 
         return (
-            <div className='input-group' style={{width:400}} tabIndex="0" 
-                onClick={this.onInputClick} onKeyDown={this.onKeyDown} >
+            <div className='input-group' style={{width:400}} onClick={this.onInputClick} onKeyDown={this.onKeyDown} >
                 <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
                 <span className="clearer glyphicon glyphicon-triangle-bottom" style={{...spanstyles, right:10, fontSize:16}} />
