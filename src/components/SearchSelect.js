@@ -61,7 +61,7 @@ class SearchSelect extends BaseComponent{
     onInputClick(e){
         // show options..
         e.nativeEvent.stopImmediatePropagation();
-        this.setState({ show: true });
+        this.setState({ show: !this.state.show });
     }
     onItemClick(e){
         e.nativeEvent.stopImmediatePropagation();
@@ -101,7 +101,7 @@ class SearchSelect extends BaseComponent{
         let spanstyles = {
             position: 'absolute', right: 30, top: 0, bottom: 0,
             height: 14, margin: 'auto', fontSize: 14, cursor: 'pointer',
-            color: '#ccc', zIndex:2
+            color: '#ccc', zIndex:4
         };
 
         return (
@@ -109,7 +109,7 @@ class SearchSelect extends BaseComponent{
                 onClick={this.onInputClick} onKeyDown={this.onKeyDown} >
                 <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
-                <span className="clearer glyphicon glyphicon-triangle-bottom" style={{...spanstyles, right:10, fontSize: 16}} />
+                <span className="clearer glyphicon glyphicon-triangle-bottom" style={{...spanstyles, right:10, fontSize:16}} />
                 {!show && value && 
                     <span className="glyphicon glyphicon-remove" style={spanstyles} onClick={this.onRemoveValue} /> }       
                 {this.renderItems(this.state)}
