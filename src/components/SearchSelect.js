@@ -41,7 +41,7 @@ class SearchSelect extends BaseComponent{
                     this.setState({show: true});
                 }
                 break;
-            case 27: //escape
+            case 27: //scape
                 if(show){
                     this.setState({show: false});
                 }else{
@@ -98,17 +98,20 @@ class SearchSelect extends BaseComponent{
     render(){
         let { search, value, show } = this.state;
         let text = show? search: value;
+        let spanstyles = {
+            position: 'absolute', right: 30, top: 0, bottom: 0,
+            height: 14, margin: 'auto', fontSize: 14, cursor: 'pointer',
+            color: '#ccc', zIndex:2
+        };
+
         return (
             <div className='input-group' style={{width:400}} tabIndex="0" 
                 onClick={this.onInputClick} onKeyDown={this.onKeyDown} >
                 <input type="text" className="form-control" placeholder="search..." 
                     onChange={this.onInputChange} value={text} />
-                <span className="clearer glyphicon glyphicon-triangle-bottom form-control-feedback" />
-                {!show && value && <span className="glyphicon glyphicon-remove" 
-                    style={{position: 'absolute', right: 40, top: 0, bottom: 0,
-                        height: 14, margin: 'auto', fontSize: 16, cursor: 'pointer',
-                        color: '#ccc', zIndex:2}}
-                    onClick={this.onRemoveValue} /> }       
+                <span className="clearer glyphicon glyphicon-triangle-bottom" style={{...spanstyles, right:10, fontSize: 16}} />
+                {!show && value && 
+                    <span className="glyphicon glyphicon-remove" style={spanstyles} onClick={this.onRemoveValue} /> }       
                 {this.renderItems(this.state)}
             </div>
         )
