@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 const DEF_STYLES = { display: 'inline-block' };
 
@@ -15,10 +14,6 @@ export default class ClickOutside extends Component {
 		this.props.node.removeEventListener('click', this.handleDocClick);
 	}
 	handleDocClick(e){
-		const area = ReactDOM.findDOMNode(this.refs.area);
-		const area_ = this.refs.area;
-		console.log([area, area_].map(a=>a.contains(e.target)));
-
 		if(!this.refs.area.contains(e.target)){
 			this.props.onClickOutside(e);
 		}
@@ -34,8 +29,8 @@ export default class ClickOutside extends Component {
 }
 
 ClickOutside.propTypes = {
-	node: React.PropTypes.object, // container
-	onClickOutside: React.PropTypes.func.isRequired
+	onClickOutside: React.PropTypes.func.isRequired,
+	node: React.PropTypes.object,
 };
 ClickOutside.defaultProps = {
 	node: window.document
