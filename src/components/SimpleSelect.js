@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ClickOutside from './ClickOutside';
+import * as styles from './select.css';
 
 const ITEMS = [
 	{ value: 1, text: 'uno' },
@@ -44,8 +45,8 @@ const KEY_CODES = {
 
 const ListItem = ({ item, item:{value, text}, onItemClick, onItemMouseEnter, index, selected, overItem }) => (
 	<li value={value} onClick={() => onItemClick(item)} onMouseEnter={()=>onItemMouseEnter(index, item)} 
-		style={{ backgroundColor: (index===overItem && '#f5f5f5') || (item===selected && '#f0f0f0') }}>
-		<a>{ text }</a>
+		style={{ backgroundColor: (index===overItem && '#f5f5f5') || (item===selected && '#f0f0f0')}}>
+		<span className={styles.item}>{ text }</span>
 	</li>
 );
 
