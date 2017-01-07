@@ -7,7 +7,7 @@ const ITEMS = [
 	{ value: 'html', text: '<b>bold</b>'}
 ];
 
-const ITEM = {};
+const ITEM = { text: '' };
 
 const SPIN_STYLES = {
 	position: 'absolute',
@@ -55,6 +55,7 @@ export class SimpleSelect extends Component {
 		this.setState({ open: !this.state.open });
 	}
 	handleChange(e){
+		e.stopPropagation();
 		this.setState({ searchTerm: e.target.value });
 	}
 	removeItem(){
@@ -63,7 +64,7 @@ export class SimpleSelect extends Component {
 	_render(open, items){
 		return (
 			<ul className="dropdown-menu" style={getListStyles(open)}>
-				{ items.map((item, i) => <li key={i} value={item.value} onClick={()=>this.setState({item})}>{item.text}</li>) }
+				{ items.map((item, i) => <li key={i} value={item.value} onClick={()=>this.setState({item})}><a>{item.text}</a></li>) }
 			</ul>
 		);
 	}
@@ -75,7 +76,7 @@ export class SimpleSelect extends Component {
 		return (
 			<ClickOutside onClickOutside={this.handleClickOut}>
 				<div className="input-group" style={style} onClick={this.handleClick}>
-					<input type="text" className="form-control" value={value} onChange={this.handleChange} />
+					<input type="text" className="form-control" onChange={this.handleChange} value={value} />
 					<span className="clearer glyphicon glyphicon-triangle-bottom" style={SPIN_STYLES} />
 					{ !open && value && <span className="clearer glyphicon glyphicon-remove" style={X_STYLES} onClick={this.removeItem}/> }
 					{ this._render(open, items) }
