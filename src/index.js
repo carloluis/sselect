@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SearchSelect from './components/SearchSelect';
 import ClickOutside from './components/ClickOutside';
-import SimpleSelect from './components/SimpleSelect';
+import SimpleSelect from './components/simple-select/SimpleSelect';
 
 const root_dom = document.getElementById('app');
 window.root_dom = root_dom;

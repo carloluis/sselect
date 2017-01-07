@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ClickOutside from './ClickOutside';
+import ClickOutside from '../ClickOutside';
 import * as styles from './select.css';
 
 const ITEMS = [
