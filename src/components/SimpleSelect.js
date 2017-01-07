@@ -42,6 +42,19 @@ const KEY_CODES = {
 	UP: 38
 };
 
+const ListItem = ({ item, item:{value, text}, onItemClick, onItemMouseEnter, index, selected, overItem }) => (
+	<li value={value} onClick={() => onItemClick(item)} onMouseEnter={()=>onItemMouseEnter(index, item)} 
+		style={{ backgroundColor: (index===overItem && '#f5f5f5') || (item===selected && '#f0f0f0') }}>
+		<a>{ text }</a>
+	</li>
+);
+
+const ListItems = ({ open, items, onItemClick, onItemMouseEnter, selected, overItem }) => (
+	<ul className="dropdown-menu" style={getListStyles(open)}>
+		{ items.map((item, index) => <ListItem key={index} {...{item, onItemClick, onItemMouseEnter, index, selected, overItem}} />) }
+	</ul>
+);
+
 export class SimpleSelect extends Component {
 	constructor(props){
 		super(props);
@@ -56,6 +69,8 @@ export class SimpleSelect extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.removeItem = this.removeItem.bind(this);
 		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleItemClick = this.handleItemClick.bind(this);
+		this.handleItemMouseEnter = this.handleItemMouseEnter.bind(this);
 	}
 	handleClickOut(e){
 		this.setState({ open: false });
@@ -85,6 +100,12 @@ export class SimpleSelect extends Component {
 	handleClick(e){
 		this.setState({ open: !this.state.open });
 	}
+	handleItemClick(item){
+		this.setState({ item });
+	}
+	handleItemMouseEnter(index, item){
+		this.setState({ index });
+	}
 	handleChange(e){
 		e.stopPropagation();
 		this.setState({ searchTerm: e.target.value });
@@ -104,9 +125,10 @@ export class SimpleSelect extends Component {
 		);
 	}
 	render() {
-		let { open, searchTerm, item, item: { text } } = this.state;
+		let { open, searchTerm, item, item: { text }, index } = this.state;
 		let value = open? searchTerm: text;
 		let { style, items } = this.props;
+		let filteredItems = this.filter(items, searchTerm);
 
 		return (
 			<ClickOutside onClickOutside={this.handleClickOut}>
@@ -114,7 +136,7 @@ export class SimpleSelect extends Component {
 					<input type="text" className="form-control" onChange={this.handleChange} value={value} />
 					<span className="glyphicon glyphicon-triangle-bottom" style={SPIN_STYLES} />
 					{ !open && value && <span className="glyphicon glyphicon-remove" style={X_STYLES} onClick={this.removeItem}/> }
-					{ this._render(open, items, searchTerm) }
+					<ListItems items={filteredItems} onItemClick={this.handleItemClick} onItemMouseEnter={this.handleItemMouseEnter} open={open} overItem={index} selected={item} />
 				</div>
 			</ClickOutside>
 		);
