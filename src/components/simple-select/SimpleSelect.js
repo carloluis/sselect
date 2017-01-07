@@ -5,7 +5,8 @@ import * as styles from './select.css';
 const ITEMS = [
 	{ value: 1, text: 'uno' },
 	{ value: 2, text: 'dos' },
-	{ value: 'html', text: '<b>bold</b>'}
+	{ value: 3, text: '<b>bold</b>'},
+	{ value: 4, text: '<i>italic</i>'}
 ];
 
 const ITEM = { text: '' };
@@ -43,10 +44,12 @@ const KEY_CODES = {
 	UP: 38
 };
 
+const createMarkup = (markup) => ({ __html: markup });
+
 const ListItem = ({ item, item:{value, text}, onItemClick, onItemMouseEnter, index, selected, overItem }) => (
 	<li value={value} onClick={() => onItemClick(item)} onMouseEnter={()=>onItemMouseEnter(index, item)} 
 		style={{ backgroundColor: (index===overItem && '#f5f5f5') || (item===selected && '#f0f0f0')}}>
-		<span className={styles.item}>{ text }</span>
+		<span className={styles.item} dangerouslySetInnerHTML={createMarkup(text)} />
 	</li>
 );
 
@@ -133,8 +136,9 @@ export class SimpleSelect extends Component {
 
 		return (
 			<ClickOutside onClickOutside={this.handleClickOut}>
-				<div className="input-group" style={style} onClick={this.handleClick} onKeyDown={this.handleKeyDown}>
-					<input type="text" className="form-control" onChange={this.handleChange} value={value} />
+				<div className="input-group" style={style} onClick={this.handleClick} onKeyDown={this.handleKeyDown} tabIndex="0">
+					<div className="form-control" dangerouslySetInnerHTML={createMarkup(value)} style={{ display: open? 'none': 'inline-block' }} />
+					<input type="text" className="form-control" onChange={this.handleChange} value={value} style={{ display: open? 'inline-block': 'none' }} />
 					<span className="glyphicon glyphicon-triangle-bottom" style={SPIN_STYLES} />
 					{ !open && value && <span className="glyphicon glyphicon-remove" style={X_STYLES} onClick={this.removeItem}/> }
 					<ListItems items={filteredItems} onItemClick={this.handleItemClick} onItemMouseEnter={this.handleItemMouseEnter} open={open} overItem={index} selected={item} />
