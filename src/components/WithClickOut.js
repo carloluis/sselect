@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export const WithClickOut = (WrappedComponent, props) => class extends Component {
+export const withClickOut = (WrappedComponent, props) => class extends Component {
 	static displayName = `ClickOut(${WrappedComponent.displayName || WrappedComponent.name})`
 	constructor(...args){
 		super(...args);
@@ -25,4 +25,4 @@ export const WithClickOut = (WrappedComponent, props) => class extends Component
 	}
 };
 
-export default WithClickOut;
+export default withClickOut;

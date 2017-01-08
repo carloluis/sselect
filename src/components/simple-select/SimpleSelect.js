@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WithClickOut from '../WithClickOut';
+import withClickOut from '../withClickOut';
 import * as styles from './select.css';
 
 const ITEMS = [
@@ -163,4 +163,4 @@ SimpleSelect.defaultProps = {
 
 
 
-export default WithClickOut(SimpleSelect);
+export default withClickOut(SimpleSelect);
