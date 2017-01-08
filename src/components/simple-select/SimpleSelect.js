@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ClickOutside from '../ClickOutside';
+import WithClickOut from '../WithClickOut';
 import * as styles from './select.css';
 
 const ITEMS = [
@@ -135,15 +135,13 @@ export class SimpleSelect extends Component {
 		let filteredItems = this.filter(items, searchTerm);
 
 		return (
-			<ClickOutside onClickOutside={this.handleClickOut}>
-				<div className="input-group" style={style} onClick={this.handleClick} onKeyDown={this.handleKeyDown} tabIndex="0">
-					<div className="form-control" dangerouslySetInnerHTML={createMarkup(value)} style={{ display: open? 'none': 'inline-block' }} />
-					<input type="text" className="form-control" onChange={this.handleChange} value={value} style={{ display: open? 'inline-block': 'none' }} />
-					<span className="glyphicon glyphicon-triangle-bottom" style={SPIN_STYLES} />
-					{ !open && value && <span className="glyphicon glyphicon-remove" style={X_STYLES} onClick={this.removeItem}/> }
-					<ListItems items={filteredItems} onItemClick={this.handleItemClick} onItemMouseEnter={this.handleItemMouseEnter} open={open} overItem={index} selected={item} />
-				</div>
-			</ClickOutside>
+			<div className="input-group" style={style} onClick={this.handleClick} onKeyDown={this.handleKeyDown} tabIndex="0" >
+				<div className="form-control" dangerouslySetInnerHTML={createMarkup(value)} style={{ display: open? 'none': 'inline-block' }} />
+				<input type="text" className="form-control" onChange={this.handleChange} value={value} style={{ display: open? 'inline-block': 'none' }} />
+				<span className="glyphicon glyphicon-triangle-bottom" style={SPIN_STYLES} />
+				{ !open && value && <span className="glyphicon glyphicon-remove" style={X_STYLES} onClick={this.removeItem}/> }
+				<ListItems items={filteredItems} onItemClick={this.handleItemClick} onItemMouseEnter={this.handleItemMouseEnter} open={open} overItem={index} selected={item} />
+			</div>
 		);
 	}
 }
@@ -165,4 +163,4 @@ SimpleSelect.defaultProps = {
 
 
 
-export default SimpleSelect;
+export default WithClickOut(SimpleSelect);
