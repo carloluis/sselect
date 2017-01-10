@@ -6,7 +6,7 @@ const componentName = (RComponent) => RComponent.displayName || RComponent.name 
 
 const withLifehooks = ({ componentWillMount, componentDidMount, componentWillReceiveProps, shouldComponentUpdate, componentWillUpdate, componentDidUpdate, componentWillUnmount }) => (WrappedComponent) => {
 	return class extends WrappedComponent {
-		static displayName = 'Lifehooks(${componentName(WrappedComponent))'
+		static displayName = 'Lifehooks(' + componentName(WrappedComponent) + ')'
 		componentWillMount() {
 			if (checkFunction(componentWillMount)) {
 				componentWillMount();
