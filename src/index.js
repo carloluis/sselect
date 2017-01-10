@@ -13,29 +13,54 @@ let items = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eig
 const Sep = ({top=20}) => <div style={{paddingTop:top}} />
 
 const WLH = withLifehooks({
-	componentDidMount: () => console.log('WLH: componentDidMount')
+	componentWillMount: () => console.log('WLH: componentWillMount'),
+	componentDidMount: () => console.log('WLH: componentDidMount'),
+	componentWillReceiveProps: () => console.log('WLH: componentWillReceiveProps'),
+	shouldComponentUpdate: () => console.log('WLH: shouldComponentUpdate'),
+	componentWillUpdate: () => console.log('WLH: componentWillUpdate'),
+	componentDidUpdate: () => console.log('WLH: componentDidUpdate'),
+	componentWillUnmount: () => console.log('WLH: componentWillUnmount')
 })(SimpleSelect);
 
-let example = (
-	<div className='example' >
-		<h4>ClickOutside>SearchSelect</h4>
-		<ClickOutside node={root_dom} onClickOutside={()=>console.log('SearchSelect 1')}>
-			<SearchSelect items={items} />	
-		</ClickOutside>
-		<Sep top={200} />
+class App extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			items: [{ value: 1, text: 'uno' }, { value: 2, text: 'dos' }]
+		};
+		this.handleClick = this.handleClick.bind(this);
+	}
+	handleClick(e){
+		let len = this.state.items.length;
+		this.setState({
+			items: [...this.state.items, {value: len, text: 'text:'+len}]
+		});
+	}
+	render(){
+		return (
+			<div className='example' >
+				<h4>ClickOutside>SearchSelect</h4>
+				<ClickOutside node={root_dom} onClickOutside={()=>console.log('SearchSelect 1')}>
+					<SearchSelect items={items} />	
+				</ClickOutside>
+				<Sep top={200} />
 
-		<h4>SearchSelect</h4>
-		<SearchSelect items={items} />
-		<Sep top={200} />
-		<h4>SimpleSelect</h4>
-		<SimpleSelect style={{width:200}} />
+				<h4>SearchSelect</h4>
+				<SearchSelect items={items} />
+				<Sep top={200} />
+				<h4>SimpleSelect</h4>
+				<SimpleSelect style={{width:200}} />
 
-		<Sep top={200} />
-		<WLH style={{width:200}}/>
-	</div>
-);
+				<Sep top={200} />
+				<WLH style={{width:200}} items={this.state.items} />
+				<Sep top={200} />
+				<input type="button" value="CHANGE ITEMS" onClick={this.handleClick}/>
+			</div>
+		);
+	}
+}
 
 ReactDOM.render(
-    example,
+    <App />,
     document.getElementById('app')
 );
