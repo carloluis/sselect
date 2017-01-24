@@ -100,6 +100,8 @@ export class SimpleSelect extends Component {
 				this.setState({ open: true, index: prev });
 				break;
 		}
+
+		e.preventDefault();
 	}
 	handleClick(e){
 		this.setState({ open: !this.state.open });
